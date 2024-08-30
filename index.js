@@ -10,7 +10,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
-
 app.use(express.static(path.join(__dirname, 'public')));
 
 
@@ -24,10 +23,6 @@ app.get('/notes', (req, res) => {
 });
 
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/index.html'));
-});
-
 app.get("/api/notes", (req, res) => {
   fs.readFile("./develop/db/db.json", "utf8", (err, data) => {
     if (err) {
@@ -37,6 +32,7 @@ app.get("/api/notes", (req, res) => {
     res.json(JSON.parse(data));
   });
 });
+
 
 app.post("/api/notes", (req, res) => {
   const newNote = { ...req.body, id: uuidv4() };
@@ -65,8 +61,9 @@ app.post("/api/notes", (req, res) => {
   });
 });
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "develop/public", "index.html"));
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
 app.listen(PORT, () => {
